@@ -8,7 +8,7 @@ const SideBar = ({ open }) => {
     <div
       className={`md:w-2/5 lg:w-1/5 md:flex flex-col align-middle h-screen md:top-0 md:sticky px-6 shadow-lg md:transform-none ${
         open
-          ? "absolute left-0 top-0 transform translate-x-0 z-20 bg-white"
+          ? "fixed left-0 top-0 transform translate-x-0 z-20 bg-white"
           : "relative transform -translate-x-full hidden"
       }`}
     >
