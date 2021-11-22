@@ -4,7 +4,7 @@ import { Menu } from "react-feather";
 const Header = ({ open, setOpen }) => {
   const [checked, setChecked] = useState(false);
   return (
-    <div className="h-20 px-6 shadow-lg w-full flex items-center justify-between top-0 sticky">
+    <div className="h-20 px-6 shadow-lg w-full flex items-center justify-between top-0 sticky mb-8">
       <h1 className="text-2xl font-bold">Dashboard</h1>
       <div className="flex items-center justify-center">
         <label

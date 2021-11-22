@@ -1,11 +1,9 @@
-import { Layout } from "./pages";
-
+import routes from "./router";
+import { useRoutes } from "react-router-dom";
 function App() {
-  return (
-    <div className="App">
-      <Layout />
-    </div>
-  );
+  const router = useRoutes(routes);
+
+  return <div className="App">{router}</div>;
 }
 
 export default App;
