@@ -3,7 +3,9 @@ import ReactStars from "react-rating-stars-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalf } from "@fortawesome/free-regular-svg-icons";
 import { X, Edit } from "react-feather";
+import { DeleteModal } from "./index";
 const ProductCard = ({ description }) => {
+  const [modal, setModal] = useState(false);
   const [hover, setHover] = useState(false);
   const [tooltip, setToolTip] = useState(false);
   const data1 = [
@@ -23,13 +25,14 @@ const ProductCard = ({ description }) => {
         />
         <div
           className={`absolute h-40 w-full top-0 left-0 bg-purple-400 bg-opacity-0 cursor-pointer`}
-          onPointerEnter={() => setHover(true)}
-          onPointerLeave={() => setHover(false)}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+          onTouchStart={() => setHover(true)}
         >
           {hover ? (
             <div>
               <div className="absolute h-10 w-10 bg-gray-600 top-2 opacity-80 rounded-lg right-1 hover:text-white hover:bg-purple-400 hover:opacity-100 cursor-pointer flex align-middle justify-center items-center">
-                <X />
+                <X onClick={() => setModal(true)} />
               </div>
               <div className="absolute h-10 w-10 bg-gray-600 top-2 opacity-80 rounded-lg right-12 hover:text-white hover:bg-purple-400 hover:opacity-100 cursor-pointer flex align-middle justify-center items-center">
                 <Edit />
@@ -84,12 +87,13 @@ const ProductCard = ({ description }) => {
               id={data.name}
             >
               <p>Fat</p>
-              <p>Grams:20</p>
+              <p>Grams:{data.name}</p>
               <p>Percentage:40%</p>
             </div>
           </div>
         ))}
       </div>
+      <DeleteModal modal={modal} setModal={setModal} />
     </div>
   );
 };
