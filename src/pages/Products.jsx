@@ -1,11 +1,15 @@
-import React from "react";
-import { ProductCard } from "../components";
+import React, { useState } from "react";
+import { ProductCard, AddProductModal } from "../components";
 const Products = () => {
+  const [addmodal, setAddModal] = useState(false);
   return (
     <div>
       <div className="flex h-10 align-middle justify-between w-full mb-8">
         <h3 className="text-4xl font-bold text-gray-600">Products</h3>
-        <p className="h-10 w-10 rounded-full bg-purple-400 flex align-middle justify-center items-center text-2xl text-white cursor-pointer">
+        <p
+          className="h-10 w-10 rounded-full bg-purple-400 flex align-middle justify-center items-center text-2xl text-white cursor-pointer"
+          onClick={() => setAddModal(true)}
+        >
           +
         </p>
       </div>
@@ -35,6 +39,7 @@ const Products = () => {
           <ProductCard />
         </div>
       </div>
+      <AddProductModal modal={addmodal} setAddModal={setAddModal} />
     </div>
   );
 };
