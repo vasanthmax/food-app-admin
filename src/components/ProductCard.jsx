@@ -7,14 +7,14 @@ import { DeleteModal } from "./index";
 const ProductCard = ({ description }) => {
   const [modal, setModal] = useState(false);
   const [hover, setHover] = useState(false);
-  const [tooltip, setToolTip] = useState(false);
-  const data1 = [
-    { name: "one" },
-    { name: "two" },
-    { name: "three" },
-    { name: "four" },
-  ];
-  const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  // const [tooltip, setToolTip] = useState(false);
+  // const data1 = [
+  //   { name: "one" },
+  //   { name: "two" },
+  //   { name: "three" },
+  //   { name: "four" },
+  // ];
+  // const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
   return (
     <div className="mb-8 shadow-lg w-full rounded-lg overflow-x-hidden">
       <div className={`relative`}>
@@ -60,39 +60,13 @@ const ProductCard = ({ description }) => {
           activeColor="#ffd700"
         />
       </div>
-      <div className="text-gray-300 text-xs px-3">
+      <div className="text-gray-300 text-xs px-3 mb-4">
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate
           non iure voluptas laborum ab necessitatibus
         </p>
       </div>
-      <div className="mt-2 flex px-3 pb-4 flex-wrap">
-        {data1.map((data, i) => (
-          <div
-            style={{
-              background: `${
-                colors[Math.floor(Math.random() * colors.length)]
-              }`,
-            }}
-            className="h-8 w-8 text-xs rounded-full flex align-middle items-center justify-center mb-2 mr-2 cursor-pointer"
-            onMouseEnter={() => setToolTip(i)}
-            onMouseLeave={() => setToolTip(false)}
-          >
-            {data.name.slice(0, 1)}
-            <div
-              className={`text-sm mt-32 bg-gray-600 text-gray-100 px-3 absolute rounded bg-opacity-50 shadow-xl p-4 ${
-                tooltip === i ? "" : "hidden"
-              }`}
-              key={data.name}
-              id={data.name}
-            >
-              <p>Fat</p>
-              <p>Grams:{data.name}</p>
-              <p>Percentage:40%</p>
-            </div>
-          </div>
-        ))}
-      </div>
+
       <DeleteModal modal={modal} setModal={setModal} />
     </div>
   );

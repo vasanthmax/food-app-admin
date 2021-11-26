@@ -7,7 +7,7 @@ const Products = () => {
       <div className="flex h-10 align-middle justify-between w-full mb-8">
         <h3 className="text-4xl font-bold text-gray-600">Products</h3>
         <p
-          className="h-10 w-10 rounded-full bg-purple-400 flex align-middle justify-center items-center text-2xl text-white cursor-pointer"
+          className="h-12 w-12 rounded-full bg-purple-400 flex align-middle justify-center items-center text-3xl text-white cursor-pointer"
           onClick={() => setAddModal(true)}
         >
           +

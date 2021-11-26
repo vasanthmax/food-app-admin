@@ -1,8 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu } from "react-feather";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
-const Header = ({ open, setOpen }) => {
+const Header = ({ open, setOpen, firebaseApp }) => {
+  const db = getFirestore(firebaseApp);
+  const querySnapshot = doc(db, "globals", "status");
   const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      const docSnap = await getDoc(querySnapshot);
+      if (docSnap.exists) {
+        setChecked(docSnap.data().open);
+      }
+    }
+    fetchData();
+  }, []);
+
+  const shopUpdate = async (data) => {
+    await setDoc(querySnapshot, { open: data }, { merge: true });
+    setChecked(data);
+  };
+
   return (
     <div className="h-20 px-6 shadow-lg w-full flex items-center justify-between top-0 sticky mb-8 z-10 bg-white">
       <h1 className="text-2xl font-bold">Dashboard</h1>
@@ -16,7 +35,9 @@ const Header = ({ open, setOpen }) => {
               type="checkbox"
               id="toggleB"
               class="sr-only"
-              onChange={(e) => setChecked(e.target.checked)}
+              onChange={(e) => {
+                shopUpdate(e.target.checked);
+              }}
             />
             <div
               className={`block ${
