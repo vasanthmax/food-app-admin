@@ -6,7 +6,7 @@ const Header = ({ open, setOpen, firebaseApp }) => {
   const db = getFirestore(firebaseApp);
   const querySnapshot = doc(db, "globals", "status");
   const [checked, setChecked] = useState(false);
-
+  const [value, onChange] = useState(new Date());
   useEffect(() => {
     async function fetchData() {
       const docSnap = await getDoc(querySnapshot);
