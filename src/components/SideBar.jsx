@@ -1,9 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, ShoppingCart } from "react-feather";
 import { NavLink, useLocation } from "react-router-dom";
-const SideBar = ({ open }) => {
+import TextField from "@mui/material/TextField";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DateTimePicker from "@mui/lab/DateTimePicker";
+import { ThemeProvider, createTheme } from "@mui/material";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+
+const SideBar = ({ open, firebaseApp }) => {
+  const db = getFirestore(firebaseApp);
+  const queryTimingSnapshot = doc(db, "globals", "timing");
   const location = useLocation();
-  console.log(location);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const color = "#9CA3AF";
+  const materialTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#A78BFA",
+        contrastText: "#fff",
+      },
+    },
+  });
+  useEffect(() => {
+    async function fetchData() {
+      const doctimingSnap = await getDoc(queryTimingSnapshot);
+      if (doctimingSnap.exists) {
+        setStartDate(new Date(doctimingSnap.data().start.toDate()));
+        setEndDate(new Date(doctimingSnap.data().end.toDate()));
+      }
+    }
+    fetchData();
+  }, []);
+  const startTimeUpdate = async (data) => {
+    await setDoc(queryTimingSnapshot, { start: data }, { merge: true });
+    setStartDate(data);
+  };
+
+  const endTimeUpdate = async (data) => {
+    await setDoc(queryTimingSnapshot, { end: data }, { merge: true });
+    setEndDate(data);
+  };
   return (
     <div
       className={`md:w-2/5 lg:w-1/5 md:flex flex-col align-middle h-screen md:top-0 md:sticky px-6 shadow-lg md:transform-none ${
@@ -49,6 +87,53 @@ const SideBar = ({ open }) => {
               Products
             </li>
           </NavLink>
+          <div className="mb-3 lg:hidden">
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <ThemeProvider theme={materialTheme}>
+                <DateTimePicker
+                  renderInput={(props) => (
+                    <TextField
+                      {...props}
+                      sx={{
+                        svg: { color },
+                        input: { color },
+                        label: { color },
+                      }}
+                    />
+                  )}
+                  label="Start Time"
+                  value={startDate}
+                  onChange={(newValue) => {
+                    startTimeUpdate(newValue);
+                  }}
+                />
+              </ThemeProvider>
+            </LocalizationProvider>
+          </div>
+          <div className="mb-3 lg:hidden">
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <ThemeProvider theme={materialTheme}>
+                <DateTimePicker
+                  renderInput={(props) => (
+                    <TextField
+                      {...props}
+                      sx={{
+                        svg: { color },
+                        input: { color },
+                        label: { color },
+                        focus: { color },
+                      }}
+                    />
+                  )}
+                  label="End Time"
+                  value={endDate}
+                  onChange={(newValue) => {
+                    endTimeUpdate(newValue);
+                  }}
+                />
+              </ThemeProvider>
+            </LocalizationProvider>
+          </div>
         </ul>
       </div>
     </div>
